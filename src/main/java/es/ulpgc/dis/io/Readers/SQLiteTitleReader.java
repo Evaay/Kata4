@@ -40,15 +40,7 @@ public class SQLiteTitleReader implements TitleReader, AutoCloseable{
     @Override
     public Iterator<Title> read() throws IOException {
         return new Iterator<>() {
-            final ResultSet resultSet;
-
-            {
-                try {
-                    resultSet = selectTitlePreparedStatement.executeQuery();
-                } catch (SQLException e) {
-                    throw new IOException(e);
-                }
-            }
+            final ResultSet resultSet = executeQuery();
 
             @Override
             public boolean hasNext() {
@@ -70,6 +62,14 @@ public class SQLiteTitleReader implements TitleReader, AutoCloseable{
                 }
             }
         };
+    }
+
+    private ResultSet executeQuery() throws IOException {
+        try {
+            return selectTitlePreparedStatement.executeQuery();
+        } catch (SQLException e) {
+            throw new IOException(e);
+        }
     }
 
     @Override

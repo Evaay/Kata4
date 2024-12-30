@@ -56,7 +56,7 @@ public class SQLiteTitleWriter implements TitleWriter, AutoCloseable{
             insertTitlePreparedStatement.setString(1, title.id());
             insertTitlePreparedStatement.setString(2, title.titleType().name());
             insertTitlePreparedStatement.setString(3, title.primaryTitle());
-            insertTitlePreparedStatement.execute();
+            insertTitlePreparedStatement.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
             throw new IOException(e);

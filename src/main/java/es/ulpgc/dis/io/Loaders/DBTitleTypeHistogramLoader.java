@@ -31,15 +31,16 @@ public class DBTitleTypeHistogramLoader implements HistogramLoader{
         }
     }
 
-    public void loadMoreTitle(TitleReader titleReader, Integer LOAD_DB) throws IOException {
+    public void loadMoreTitle(TitleReader titleReader, Integer LONG_DB) throws IOException {
         Iterator<Title> titles = titleReader.read();
         TitleWriter dbWriter = new SQLiteTitleWriter(dbFile);
 
         int count = 0;
-        for (int i = 0; i < LOAD_DB; i++) {
+        for (int i = 0; i < LONG_DB; i++) {
             titles.next();
+            count++;
         }
-        while (titles.hasNext() && count < (BATCH_SIZE + LOAD_DB)) {
+        while (titles.hasNext() && count < (BATCH_SIZE + LONG_DB)) {
             dbWriter.write(titles.next());
             count++;
         }

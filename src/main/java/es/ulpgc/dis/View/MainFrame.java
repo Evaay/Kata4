@@ -43,14 +43,14 @@ public class MainFrame extends JFrame {
     }
 
     private JButton toggle() {
-        JButton button = new JButton();
+        JButton button = new JButton("toggle");
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     commands.get("toggle").execute();
                     commands.get("getRandomTitle").execute();
-                } catch (IOException ex) {
+                } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
             }

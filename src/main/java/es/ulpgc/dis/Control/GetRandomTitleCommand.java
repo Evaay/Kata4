@@ -17,11 +17,11 @@ public class GetRandomTitleCommand implements Command{
     }
 
     @Override
-    public void execute() throws IOException {
+    public void execute() throws Exception {
         try (SQLiteTitleReader reader = new SQLiteTitleReader(dbFile)){
             String title = reader.getRandomTitle();
             mainFrame.getTextArea().setText(title);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new IOException(e);
         }
     }
