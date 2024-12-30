@@ -1,8 +1,28 @@
 package es.ulpgc.dis.Control;
 
-public class GetRandomTitleCommand implements Command{
-    @Override
-    public void execute() {
+import es.ulpgc.dis.View.MainFrame;
+import es.ulpgc.dis.io.Readers.SQLiteTitleReader;
 
+import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
+
+public class GetRandomTitleCommand implements Command{
+    private final MainFrame mainFrame;
+    private final File dbFile;
+
+    public GetRandomTitleCommand(MainFrame mainFrame, File dbFile) {
+        this.mainFrame = mainFrame;
+        this.dbFile = dbFile;
+    }
+
+    @Override
+    public void execute() throws IOException {
+        try (SQLiteTitleReader reader = new SQLiteTitleReader(dbFile)){
+            String title = reader.getRandomTitle();
+            mainFrame.getTextArea().setText(title);
+        } catch (Exception e) {
+            throw new IOException(e);
+        }
     }
 }
